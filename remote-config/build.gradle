@@ -46,12 +46,15 @@ kotlin {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$CONFIG.kotlinx_coroutines_version"
+                implementation "io.ktor:ktor-client-core:$CONFIG.versions.ktor_version"
+                implementation "io.ktor:ktor-client-json:$CONFIG.versions.ktor_version"
             }
         }
 
         androidLibMain {
             dependencies {
                 implementation "com.squareup.okhttp3:okhttp:$CONFIG.versions.okhttp"
+                implementation "io.ktor:ktor-client-android:$CONFIG.versions.ktor_version"
                 implementation "io.ktor:ktor-client-json-jvm:$CONFIG.versions.ktor_version"
             }
         }

@@ -1,15 +1,19 @@
 package com.rakuten.tech.mobile.remoteconfig
 
 import android.content.Context
+import android.util.Log
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.Cache
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import kotlinx.coroutines.*
 
 import java.io.IOException
 import java.lang.IllegalArgumentException
+
+internal actual val ApplicationDispatcher: CoroutineDispatcher = Dispatchers.Default
 
 internal class ConfigFetcher constructor(
     baseUrl: String,
@@ -32,6 +36,13 @@ internal class ConfigFetcher constructor(
     }
 
     fun fetch(): Map<String, String> {
+        val api = ApplicationApi()
+
+        api.about { it: String ->
+            Log.e("ktor", it)
+        }
+
+
         val response = client.newCall(buildFetchRequest())
             .execute()
 
