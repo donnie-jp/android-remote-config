@@ -48,7 +48,7 @@ class RemoteConfigInitProvider : ContentProvider() {
             subscriptionKey = manifestConfig.subscriptionKey(),
             context = context
         )
-        val cache = ConfigCache(context, fetcher)
+        val cache = ConfigCache(fetcher)
 
         RemoteConfig.init(cache)
 

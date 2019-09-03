@@ -1,43 +1,31 @@
 package com.rakuten.tech.mobile.remoteconfig
 
-import android.content.Context
-import android.util.Log
-import androidx.annotation.VisibleForTesting
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.io.File
 
 @Suppress("TooGenericExceptionCaught")
-internal class ConfigCache @VisibleForTesting constructor(
-    fetcher: ConfigFetcher,
-    file: File,
-    poller: AsyncPoller
+internal class ConfigCache constructor(
+        fetcher: ConfigFetcher,
+        poller: AsyncPoller
 ) {
 
-    constructor(context: Context, fetcher: ConfigFetcher) : this(
+    constructor(fetcher: ConfigFetcher) : this(
         fetcher,
-        File(
-            context.filesDir,
-            "com.rakuten.tech.mobile.remoteconfig.configcache.json"
-        ),
         AsyncPoller(DELAY_IN_MINUTES)
     )
 
-    private val config = if (file.exists()) {
-        Config.fromJsonString(file.readText())
-    } else {
-        Config(emptyMap())
-    }
+    private val config = Config(emptyMap())
 
     init {
         poller.start {
             try {
                 val fetchedConfig = fetcher.fetch()
                 val configJson = Config(fetchedConfig).toJsonString()
+                print(configJson)
 
-                file.writeText(configJson)
+//                file.writeText(configJson)
             } catch (error: Exception) {
-                Log.e("RemoteConfig", "Error while fetching config from server", error)
+//                Log.e("RemoteConfig", "Error while fetching config from server", error)
             }
         }
     }

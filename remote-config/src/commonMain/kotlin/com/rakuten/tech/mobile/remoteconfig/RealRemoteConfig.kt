@@ -1,7 +1,5 @@
 package com.rakuten.tech.mobile.remoteconfig
 
-import android.util.Log
-
 internal class RealRemoteConfig(
     private val cache: ConfigCache
 ) : RemoteConfig() {
@@ -24,7 +22,7 @@ internal class RealRemoteConfig(
                 else -> value.toInt() as T
             }
         } catch (e: NumberFormatException) {
-            Log.e("RemoteConfig", "Error parsing number from config", e)
+//            Log.e("RemoteConfig", "Error parsing number from config", e)
 
             fallback
         }

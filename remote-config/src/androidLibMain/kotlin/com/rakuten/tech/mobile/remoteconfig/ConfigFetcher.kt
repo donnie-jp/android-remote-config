@@ -15,7 +15,7 @@ import java.lang.IllegalArgumentException
 
 internal actual val ApplicationDispatcher: CoroutineDispatcher = Dispatchers.Default
 
-internal class ConfigFetcher constructor(
+class ConfigFetcher constructor(
     baseUrl: String,
     appId: String,
     private val subscriptionKey: String,
@@ -37,11 +37,6 @@ internal class ConfigFetcher constructor(
 
     fun fetch(): Map<String, String> {
         val api = ApplicationApi()
-
-        api.about { it: String ->
-            Log.e("ktor", it)
-        }
-
 
         val response = client.newCall(buildFetchRequest())
             .execute()

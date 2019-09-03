@@ -1,20 +1,18 @@
 package com.rakuten.tech.mobile.remoteconfig
 
-import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
-internal class AsyncPoller @VisibleForTesting constructor(
+internal class AsyncPoller constructor(
     delayInMinutes: Int,
     private val scope: CoroutineScope
 ) {
 
     constructor(delayInMinutes: Int) : this(delayInMinutes, GlobalScope)
 
-    private val delayInMilliseconds = TimeUnit.MINUTES.toMillis(delayInMinutes.toLong())
+    private val delayInMilliseconds = delayInMinutes.toLong() * 60 * 1000
 
     fun start(method: () -> Any) {
         scope.launch {
