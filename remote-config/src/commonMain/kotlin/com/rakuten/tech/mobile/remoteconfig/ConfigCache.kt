@@ -19,9 +19,13 @@ internal class ConfigCache constructor(
     init {
         poller.start {
             try {
-                val fetchedConfig = fetcher.fetch()
-                val configJson = Config(fetchedConfig).toJsonString()
-                print(configJson)
+                fetcher.fetch {
+                    print(it)
+                    val configJson = Config(it).toJsonString()
+                    print(configJson)
+
+                    // print to file
+                }
 
 //                file.writeText(configJson)
             } catch (error: Exception) {
